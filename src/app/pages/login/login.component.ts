@@ -5,8 +5,9 @@ import { ModalComponent } from '../../modal/modal.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputComponent } from '../../input/input.component';
 import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthAccountService } from '../../services/auth-account.service';
 
-// dps passar pro model
 interface LoginForm {
   email: FormControl;
   password: FormControl;
@@ -15,7 +16,7 @@ interface LoginForm {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ButtonComponent, CommonModule, ModalComponent, ReactiveFormsModule, InputComponent],
+  imports: [HttpClientModule, ButtonComponent, CommonModule, ModalComponent, ReactiveFormsModule, InputComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -25,6 +26,7 @@ export class LoginComponent {
   @Output("navigate") onNavigate = new EventEmitter()
 
   constructor(
+    private authAccount: AuthAccountService,
     private router: Router
   ) {
     this.loginForm = new FormGroup({
@@ -33,9 +35,16 @@ export class LoginComponent {
     })
   }
 
-  submit() {
-    this.loginForm.value;
-    this.onNavigate.emit;
-    this.router.navigate(["/dashboard"])
+  getHandleSubmit() {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.authAccount.login(email, password).subscribe((response) => {
+        if (response.length > 0) {
+          this.router.navigate(['/dashboard']);
+        } else {
+          alert('Email ou senha inválidos');
+        }
+      });
+    }
   }
 }

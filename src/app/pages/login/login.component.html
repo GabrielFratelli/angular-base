@@ -1,5 +1,4 @@
 <main>
-  <h3>oi</h3>
   <div style="background-color: white">
     <form [formGroup]="loginForm">
       <app-input
@@ -23,7 +22,7 @@
       <app-button
         name="Entrar"
         className="my-custom-class"
-        (clickEvent)="submit()"
+        (clickEvent)="getHandleSubmit()"
       ></app-button>
     </form>
   </div>
