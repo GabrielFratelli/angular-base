@@ -17,21 +17,27 @@
         </tr>
       </thead>
       <tbody>
+        @for (user of response$ | async; track user.title) {
         <tr>
-          <td style="width: 500px">teste</td>
-          <td>teste</td>
-          <td>teste</td>
-          <td>teste</td>
+          <td style="width: 500px">{{ user.name }}</td>
+          <td>{{ user.title }}</td>
+          <td>{{ user.date | date : "dd/MM/yyyy" }}</td>
+          <td>{{ user.value | currency : "BRL" }}</td>
           <td style="width: 10px">
-            <input type="checkbox" [checked]="" class="checkbox-table" />
+            <input
+              type="checkbox"
+              [checked]="user.isPayed"
+              class="checkbox-table"
+            />
           </td>
           <td>
-            <app-button name="Editar" style="margin-right: 8px"
-              >Editar</app-button
-            >
+            <app-button name="Editar" style="margin-right: 8px"></app-button>
             <app-button name="Remover"></app-button>
           </td>
         </tr>
+        } @empty {
+        <p>Nenhum resultado encontrado.</p>
+        }
       </tbody>
     </table>
   </section>
