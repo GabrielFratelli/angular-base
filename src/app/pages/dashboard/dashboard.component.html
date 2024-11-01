@@ -2,7 +2,7 @@
   <section>
     <div class="header-table">
       <app-input type="text" placeholder="Pesquisar..." />
-      <app-button name="Adicionar" (click)="toggleModal()"></app-button>
+      <app-button name="Adicionar" (click)="openModalAdded()"></app-button>
     </div>
 
     <table>
@@ -33,7 +33,7 @@
           <td>
             <app-button
               name="Editar"
-              (click)="toggleModalEdition()"
+              (click)="openModalEdition(user)"
               style="margin-right: 8px"
             ></app-button>
             <app-button name="Remover"></app-button>
@@ -47,7 +47,7 @@
   </section>
 
   <app-modal [isVisible]="isModalVisible">
-    <form class="modal-add-user">
+    <form class="modal-user">
       <app-input type="text" placeholder="Usuário" />
       <app-input type="text" placeholder="Título" />
       <app-input type="text" placeholder="Data" />
@@ -58,13 +58,39 @@
       ></app-button>
     </form>
   </app-modal>
+
   <app-modal [isVisible]="isModalVisibleEdition">
-    <form class="modal-user">
-      <app-input type="text" placeholder="Usuário" />
-      <app-input type="text" placeholder="Título" />
-      <app-input type="text" placeholder="Data" />
-      <app-input type="text" placeholder="Valor" />
+    <form class="modal-user" (ngSubmit)="updateUserData()">
+      <app-input
+        type="text"
+        placeholder="Usuário"
+        [(ngModel)]="selectedUserEdit.name"
+        name="name"
+        required
+      />
+      <app-input
+        type="text"
+        placeholder="Título"
+        [(ngModel)]="selectedUserEdit.title"
+        name="title"
+        required
+      />
+      <app-input
+        type="text"
+        placeholder="Data"
+        [(ngModel)]="selectedUserEdit.date"
+        name="date"
+        required
+      />
+      <app-input
+        type="text"
+        placeholder="Valor"
+        [(ngModel)]="selectedUserEdit.value"
+        name="value"
+        required
+      />
       <app-button
+        type="submit"
         name="Salvar"
         style="display: flex; justify-content: end"
       ></app-button>

@@ -5,12 +5,13 @@ import { InputComponent } from '../../input/input.component';
 import { UserService } from '../../services/user.service';
 import { UserResponse } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ButtonComponent, ModalComponent, InputComponent, CommonModule],
+  imports: [ButtonComponent, ModalComponent, InputComponent, CommonModule, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit {
   response$!: Observable<UserResponse[]>;
   isModalVisible: boolean = false;
   isModalVisibleEdition: boolean = false;
+  selectedUserEdit!: UserResponse;
 
   constructor(private userData: UserService) { }
 
@@ -25,15 +27,23 @@ export class DashboardComponent implements OnInit {
     this.getUserData();
   }
 
-  toggleModal() {
-    this.isModalVisible = !this.isModalVisible;
+  openModalAdded() {
+    this.isModalVisible = true;
   }
 
-  toggleModalEdition() {
-    this.isModalVisibleEdition = !this.isModalVisibleEdition;
+  openModalEdition(user: UserResponse) {
+    this.selectedUserEdit = { ...user };
+    this.isModalVisibleEdition = true;
   }
 
   getUserData(): void {
     this.response$ = this.userData.getUser()
+  }
+
+  updateUserData(): void {
+    this.userData.updateUser(this.selectedUserEdit).subscribe(() => {
+      this.isModalVisibleEdition = false;
+      this.getUserData();
+    });
   }
 }
