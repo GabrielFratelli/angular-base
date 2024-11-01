@@ -17,6 +17,7 @@ import { Observable, Subscription } from 'rxjs';
 export class DashboardComponent implements OnInit {
   response$!: Observable<UserResponse[]>;
   isModalVisible: boolean = false;
+  isModalVisibleEdition: boolean = false;
 
   constructor(private userData: UserService) { }
 
@@ -26,6 +27,10 @@ export class DashboardComponent implements OnInit {
 
   toggleModal() {
     this.isModalVisible = !this.isModalVisible;
+  }
+
+  toggleModalEdition() {
+    this.isModalVisibleEdition = !this.isModalVisibleEdition;
   }
 
   getUserData(): void {

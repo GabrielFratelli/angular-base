@@ -31,7 +31,11 @@
             />
           </td>
           <td>
-            <app-button name="Editar" style="margin-right: 8px"></app-button>
+            <app-button
+              name="Editar"
+              (click)="toggleModalEdition()"
+              style="margin-right: 8px"
+            ></app-button>
             <app-button name="Remover"></app-button>
           </td>
         </tr>
@@ -44,6 +48,18 @@
 
   <app-modal [isVisible]="isModalVisible">
     <form class="modal-add-user">
+      <app-input type="text" placeholder="Usuário" />
+      <app-input type="text" placeholder="Título" />
+      <app-input type="text" placeholder="Data" />
+      <app-input type="text" placeholder="Valor" />
+      <app-button
+        name="Salvar"
+        style="display: flex; justify-content: end"
+      ></app-button>
+    </form>
+  </app-modal>
+  <app-modal [isVisible]="isModalVisibleEdition">
+    <form class="modal-user">
       <app-input type="text" placeholder="Usuário" />
       <app-input type="text" placeholder="Título" />
       <app-input type="text" placeholder="Data" />
