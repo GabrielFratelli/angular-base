@@ -1,0 +1,5 @@
+<div class="overlay" *ngIf="isVisible"></div>
+
+<dialog class="modal" *ngIf="isVisible" [open]="isVisible">
+  <ng-content method="dialog"></ng-content>
+</dialog>

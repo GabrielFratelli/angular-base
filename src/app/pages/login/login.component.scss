@@ -1,0 +1,27 @@
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #238662;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    height: 400px;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 16px;
+    border: 2px solid #000;
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<main>
+  <h3>oi</h3>
+  <div style="background-color: white">
+    <form [formGroup]="loginForm">
+      <app-input
+        formControlName="email"
+        inputName="email"
+        type="email"
+        label="Email"
+        placeholder="Digite seu email"
+      >
+        <img src="/assets/svg/email-icon.svg" />
+      </app-input>
+      <app-input
+        formControlName="password"
+        inputName="password"
+        type="password"
+        label="Senha"
+        placeholder="Digite sua senha"
+      >
+        <img src="/assets/svg/locker-icon.svg" />
+      </app-input>
+      <app-button
+        name="Entrar"
+        className="my-custom-class"
+        (clickEvent)="submit()"
+      ></app-button>
+    </form>
+  </div>
+</main>

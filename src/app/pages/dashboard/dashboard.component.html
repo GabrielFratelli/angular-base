@@ -1,0 +1,51 @@
+<main>
+  <section>
+    <div class="header-table">
+      <app-input type="text" placeholder="Pesquisar..." />
+      <app-button name="Adicionar" (click)="toggleModal()"></app-button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Usuário</th>
+          <th>Título</th>
+          <th>Data da operação</th>
+          <th>Valor efetuado</th>
+          <th>Pago</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="width: 500px">teste</td>
+          <td>teste</td>
+          <td>teste</td>
+          <td>teste</td>
+          <td style="width: 10px">
+            <input type="checkbox" [checked]="" class="checkbox-table" />
+          </td>
+          <td>
+            <app-button name="Editar" style="margin-right: 8px"
+              >Editar</app-button
+            >
+            <app-button name="Remover"></app-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <app-modal [isVisible]="isModalVisible">
+    <form class="modal-add-user">
+      <app-input type="text" placeholder="Usuário" />
+      <app-input type="text" placeholder="Título" />
+      <app-input type="text" placeholder="Data" />
+      <app-input type="text" placeholder="Valor" />
+      <app-button
+        name="Salvar"
+        style="display: flex; justify-content: end"
+      ></app-button>
+    </form>
+  </app-modal>
+</main>

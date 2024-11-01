@@ -1,0 +1,91 @@
+main {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #238662;
+
+  section {
+    width: 100%;
+    padding: 20px;
+
+    .header-table {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+
+      app-input {
+        width: 350px;
+      }
+    }
+
+    table {
+      height: 100px;
+      width: 100%;
+      background-color: white;
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      margin-top: 20px;
+
+      thead {
+        background-color: #dddddd;
+      }
+
+      td,
+      th {
+        border: 1px solid #ebebeb;
+        text-align: left;
+        padding: 8px;
+        text-align: center;
+        width: 300px;
+      }
+      :nth-child(1) {
+        width: 500px;
+        text-align: start;
+      }
+      :nth-child(5) {
+        width: 10px;
+      }
+
+      .checkbox-table[type="checkbox"] {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #ebebeb;
+        background-color: transparent;
+        cursor: pointer;
+      }
+
+      .checkbox-table[type="checkbox"]:checked {
+        background-color: #238662;
+        border-color: #238662;
+        position: relative;
+      }
+
+      .checkbox-table[type="checkbox"]:checked::after {
+        content: "✓";
+        color: white;
+        font-size: 14px;
+        position: absolute;
+        top: 0;
+        left: 3px;
+      }
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+  }
+
+  .modal-add-user {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+}
