@@ -30,7 +30,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getUserData();
     this.initForms();
-    console.log(this.initForms())
   }
 
   initForms() {
@@ -58,10 +57,26 @@ export class DashboardComponent implements OnInit {
     this.selectedUserEdit = { ...user };
     this.isModalVisibleEdition = true;
     this.editUserForm.patchValue(user);
+    this.editUserForm.reset();
   }
 
   getUserData(): void {
     this.response$ = this.userData.getUser();
+  }
+
+  createUser(): void {
+    if (this.addUserForm.valid) {
+      const newUser: UserResponse = this.addUserForm.value;
+      this.userData.createUser(newUser).subscribe({
+        next: () => {
+          this.isModalVisible = false;
+          this.getUserData();
+        },
+        error: (err) => {
+          console.error("Erro ao criar o usuário:", err);
+        }
+      });
+    }
   }
 
   updateUserData(): void {
