@@ -21,7 +21,6 @@ export class DashboardComponent implements OnInit {
   isModalVisibleEdition: boolean = false;
   selectedUserEdit!: UserResponse;
 
-  // FormGroups
   addUserForm!: FormGroup;
   editUserForm!: FormGroup;
   @Output("submit") onSubmit = new EventEmitter()
@@ -30,7 +29,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserData();
-    this.initForms(); // Inicializa os formulários
+    this.initForms();
+    console.log(this.initForms())
   }
 
   initForms() {
@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit {
   openModalEdition(user: UserResponse) {
     this.selectedUserEdit = { ...user };
     this.isModalVisibleEdition = true;
-    this.editUserForm.patchValue(user); // Preenche o formulário de edição
+    this.editUserForm.patchValue(user);
   }
 
   getUserData(): void {
@@ -65,7 +65,6 @@ export class DashboardComponent implements OnInit {
   }
 
   updateUserData(): void {
-    // Obtém os valores do formulário
     const updatedUser: UserResponse = {
       ...this.selectedUserEdit,
       ...this.editUserForm.value
@@ -73,12 +72,11 @@ export class DashboardComponent implements OnInit {
 
     this.userData.updateUser(updatedUser).subscribe({
       next: () => {
-        this.isModalVisibleEdition = false; // Fecha o modal
-        this.getUserData(); // Atualiza a tabela com os novos dados
+        this.isModalVisibleEdition = false;
+        this.getUserData();
       },
       error: (err) => {
         console.error("Erro ao atualizar o usuário:", err);
-        // Aqui você pode adicionar um tratamento de erro, como exibir uma mensagem
       }
     });
   }
