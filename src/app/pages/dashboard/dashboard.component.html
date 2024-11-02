@@ -47,7 +47,7 @@
   </section>
 
   <app-modal [isVisible]="isModalVisible">
-    <form class="modal-user" [formGroup]="addUserForm" (ngSubmit)="onAddUser()">
+    <form class="modal-user" [formGroup]="addUserForm">
       <app-input type="text" placeholder="Usuário" formControlName="name" />
       <app-input type="text" placeholder="Título" formControlName="title" />
       <app-input type="text" placeholder="Data" formControlName="date" />
@@ -60,11 +60,7 @@
   </app-modal>
 
   <app-modal [isVisible]="isModalVisibleEdition">
-    <form
-      class="modal-user"
-      [formGroup]="editUserForm"
-      (ngSubmit)="onEditUser()"
-    >
+    <form class="modal-user" [formGroup]="editUserForm">
       <app-input type="text" placeholder="Usuário" formControlName="name" />
       <app-input type="text" placeholder="Título" formControlName="title" />
       <app-input type="text" placeholder="Data" formControlName="date" />

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ButtonComponent } from "../../components/button/button.component";
 import { ModalComponent } from '../../modal/modal.component';
 import { InputComponent } from '../../input/input.component';
@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   // FormGroups
   addUserForm!: FormGroup;
   editUserForm!: FormGroup;
+  @Output("submit") onSubmit = new EventEmitter()
 
   constructor(private userData: UserService, private fb: FormBuilder) { }
 
@@ -50,7 +51,7 @@ export class DashboardComponent implements OnInit {
 
   openModalAdded() {
     this.isModalVisible = true;
-    this.addUserForm.reset(); // Reseta o formulário ao abrir
+    this.addUserForm.reset();
   }
 
   openModalEdition(user: UserResponse) {
@@ -63,19 +64,7 @@ export class DashboardComponent implements OnInit {
     this.response$ = this.userData.getUser();
   }
 
-  onAddUser() {
-    if (this.addUserForm.valid) {
-      // Lógica para adicionar usuário
-      console.log(this.addUserForm.value);
-      this.isModalVisible = false; // Fecha o modal após salvar
-    }
-  }
+  updateUserData(): void {
 
-  onEditUser() {
-    if (this.editUserForm.valid) {
-      // Lógica para editar usuário
-      console.log(this.editUserForm.value);
-      this.isModalVisibleEdition = false; // Fecha o modal após salvar
-    }
   }
 }
