@@ -57,7 +57,6 @@ export class DashboardComponent implements OnInit {
     this.selectedUserEdit = { ...user };
     this.isModalVisibleEdition = true;
     this.editUserForm.patchValue(user);
-    this.editUserForm.reset();
   }
 
   getUserData(): void {
@@ -66,8 +65,7 @@ export class DashboardComponent implements OnInit {
 
   createUser(): void {
     if (this.addUserForm.valid) {
-      const newUser: UserResponse = this.addUserForm.value;
-      this.userData.createUser(newUser).subscribe({
+      this.userData.createUser(this.addUserForm.value).subscribe({
         next: () => {
           this.isModalVisible = false;
           this.getUserData();
@@ -95,4 +93,17 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+  deleteUser(user: UserResponse): void {
+    console.log('ID do usuário a ser excluído:', user.id);
+    this.userData.deleteUser(user.id).subscribe({
+      next: () => {
+        this.getUserData();
+      },
+      error: (err) => {
+        console.error("Erro ao deletar o usuário:", err);
+      }
+    });
+  }
+
 }
