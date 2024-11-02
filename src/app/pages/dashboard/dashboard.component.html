@@ -47,11 +47,11 @@
   </section>
 
   <app-modal [isVisible]="isModalVisible">
-    <form class="modal-user">
-      <app-input type="text" placeholder="Usuário" />
-      <app-input type="text" placeholder="Título" />
-      <app-input type="text" placeholder="Data" />
-      <app-input type="text" placeholder="Valor" />
+    <form class="modal-user" [formGroup]="addUserForm" (ngSubmit)="onAddUser()">
+      <app-input type="text" placeholder="Usuário" formControlName="name" />
+      <app-input type="text" placeholder="Título" formControlName="title" />
+      <app-input type="text" placeholder="Data" formControlName="date" />
+      <app-input type="text" placeholder="Valor" formControlName="value" />
       <app-button
         name="Salvar"
         style="display: flex; justify-content: end"
@@ -60,35 +60,15 @@
   </app-modal>
 
   <app-modal [isVisible]="isModalVisibleEdition">
-    <form class="modal-user" (ngSubmit)="updateUserData()">
-      <app-input
-        type="text"
-        placeholder="Usuário"
-        [(ngModel)]="selectedUserEdit.name"
-        name="name"
-        required
-      />
-      <app-input
-        type="text"
-        placeholder="Título"
-        [(ngModel)]="selectedUserEdit.title"
-        name="title"
-        required
-      />
-      <app-input
-        type="text"
-        placeholder="Data"
-        [(ngModel)]="selectedUserEdit.date"
-        name="date"
-        required
-      />
-      <app-input
-        type="text"
-        placeholder="Valor"
-        [(ngModel)]="selectedUserEdit.value"
-        name="value"
-        required
-      />
+    <form
+      class="modal-user"
+      [formGroup]="editUserForm"
+      (ngSubmit)="onEditUser()"
+    >
+      <app-input type="text" placeholder="Usuário" formControlName="name" />
+      <app-input type="text" placeholder="Título" formControlName="title" />
+      <app-input type="text" placeholder="Data" formControlName="date" />
+      <app-input type="text" placeholder="Valor" formControlName="value" />
       <app-button
         type="submit"
         name="Salvar"

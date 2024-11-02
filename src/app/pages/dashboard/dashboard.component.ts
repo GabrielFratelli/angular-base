@@ -6,12 +6,12 @@ import { UserService } from '../../services/user.service';
 import { UserResponse } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ButtonComponent, ModalComponent, InputComponent, CommonModule, FormsModule],
+  imports: [ButtonComponent, ModalComponent, InputComponent, CommonModule, ReactiveFormsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -21,29 +21,61 @@ export class DashboardComponent implements OnInit {
   isModalVisibleEdition: boolean = false;
   selectedUserEdit!: UserResponse;
 
-  constructor(private userData: UserService) { }
+  // FormGroups
+  addUserForm!: FormGroup;
+  editUserForm!: FormGroup;
+
+  constructor(private userData: UserService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.getUserData();
+    this.initForms(); // Inicializa os formulários
+  }
+
+  initForms() {
+    this.addUserForm = this.fb.group({
+      name: ['', Validators.required],
+      title: ['', Validators.required],
+      date: ['', Validators.required],
+      value: ['', Validators.required]
+    });
+
+    this.editUserForm = this.fb.group({
+      name: ['', Validators.required],
+      title: ['', Validators.required],
+      date: ['', Validators.required],
+      value: ['', Validators.required]
+    });
   }
 
   openModalAdded() {
     this.isModalVisible = true;
+    this.addUserForm.reset(); // Reseta o formulário ao abrir
   }
 
   openModalEdition(user: UserResponse) {
     this.selectedUserEdit = { ...user };
     this.isModalVisibleEdition = true;
+    this.editUserForm.patchValue(user); // Preenche o formulário de edição
   }
 
   getUserData(): void {
-    this.response$ = this.userData.getUser()
+    this.response$ = this.userData.getUser();
   }
 
-  updateUserData(): void {
-    this.userData.updateUser(this.selectedUserEdit).subscribe(() => {
-      this.isModalVisibleEdition = false;
-      this.getUserData();
-    });
+  onAddUser() {
+    if (this.addUserForm.valid) {
+      // Lógica para adicionar usuário
+      console.log(this.addUserForm.value);
+      this.isModalVisible = false; // Fecha o modal após salvar
+    }
+  }
+
+  onEditUser() {
+    if (this.editUserForm.valid) {
+      // Lógica para editar usuário
+      console.log(this.editUserForm.value);
+      this.isModalVisibleEdition = false; // Fecha o modal após salvar
+    }
   }
 }
