@@ -65,9 +65,11 @@
       <app-input type="text" placeholder="Título" formControlName="title" />
       <app-input type="text" placeholder="Data" formControlName="date" />
       <app-input type="text" placeholder="Valor" formControlName="value" />
+
       <app-button
         type="submit"
         name="Salvar"
+        (click)="updateUserData()"
         style="display: flex; justify-content: end"
       ></app-button>
     </form>

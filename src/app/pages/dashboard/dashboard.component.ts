@@ -34,14 +34,14 @@ export class DashboardComponent implements OnInit {
   }
 
   initForms() {
-    this.addUserForm = this.fb.group({
+    this.editUserForm = this.fb.group({
       name: ['', Validators.required],
       title: ['', Validators.required],
       date: ['', Validators.required],
       value: ['', Validators.required]
     });
 
-    this.editUserForm = this.fb.group({
+    this.addUserForm = this.fb.group({
       name: ['', Validators.required],
       title: ['', Validators.required],
       date: ['', Validators.required],
@@ -65,6 +65,21 @@ export class DashboardComponent implements OnInit {
   }
 
   updateUserData(): void {
+    // Obtém os valores do formulário
+    const updatedUser: UserResponse = {
+      ...this.selectedUserEdit,
+      ...this.editUserForm.value
+    };
 
+    this.userData.updateUser(updatedUser).subscribe({
+      next: () => {
+        this.isModalVisibleEdition = false; // Fecha o modal
+        this.getUserData(); // Atualiza a tabela com os novos dados
+      },
+      error: (err) => {
+        console.error("Erro ao atualizar o usuário:", err);
+        // Aqui você pode adicionar um tratamento de erro, como exibir uma mensagem
+      }
+    });
   }
 }
