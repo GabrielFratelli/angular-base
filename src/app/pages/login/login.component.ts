@@ -7,6 +7,7 @@ import { InputComponent } from '../../input/input.component';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthAccountService } from '../../services/auth-account.service';
+import { ToastrService } from 'ngx-toastr';
 
 interface LoginForm {
   email: FormControl;
@@ -27,7 +28,8 @@ export class LoginComponent {
 
   constructor(
     private authAccount: AuthAccountService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastrService
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -35,16 +37,18 @@ export class LoginComponent {
     })
   }
 
-  getHandleSubmit() {
+  submit() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authAccount.login(email, password).subscribe((response) => {
         if (response.length > 0) {
+          this.toastService.success("Login efetuado com sucesso!")
           this.router.navigate(['/dashboard']);
-        } else {
-          alert('Email ou senha inválidos');
         }
       });
+    } else {
+      this.toastService.error('Erro inesperado!, Tente novamente mais tarde!')
     }
   }
+
 }

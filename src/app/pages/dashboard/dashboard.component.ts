@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { UserResponse } from '../../models/user.model';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -25,7 +26,7 @@ export class DashboardComponent implements OnInit {
   editUserForm!: FormGroup;
   @Output("submit") onSubmit = new EventEmitter()
 
-  constructor(private userData: UserService, private fb: FormBuilder) { }
+  constructor(private userData: UserService, private fb: FormBuilder, private toastService: ToastrService) { }
 
   ngOnInit(): void {
     this.getUserData();
@@ -48,6 +49,10 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  closeModal() {
+    this.isModalVisible || this.isModalVisibleEdition;
+  }
+
   openModalAdded() {
     this.isModalVisible = true;
     this.addUserForm.reset();
@@ -67,13 +72,15 @@ export class DashboardComponent implements OnInit {
     if (this.addUserForm.valid) {
       this.userData.createUser(this.addUserForm.value).subscribe({
         next: () => {
+          this.toastService.success("Pagamento criado com sucesso!")
           this.isModalVisible = false;
           this.getUserData();
         },
-        error: (err) => {
-          console.error("Erro ao criar o usuário:", err);
-        }
+
       });
+    }
+    else {
+      this.toastService.error("Ops! não foi possível criar seu novo registro de pagamento.")
     }
   }
 
